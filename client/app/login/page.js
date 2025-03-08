@@ -20,6 +20,7 @@ import {
 import { AlertCircle, CheckCircle2 } from "lucide-react";
 
 export default function SignupPage() {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const router = useRouter();
   const [formData, setFormData] = useState({
     email: "",
