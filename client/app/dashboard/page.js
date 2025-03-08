@@ -105,9 +105,12 @@ export default function Dashboard() {
   const handleSubmit = async () => {
     try {
       setIsSavePending(true);
-      const result = await postRequest(`${apiUrl}/update-selected-columns`, {
-        selectedColumns: columns,
-      });
+      const result = await postRequest(
+        `${apiUrl}/api/update-selected-columns`,
+        {
+          selectedColumns: columns,
+        }
+      );
 
       if (result.suceess === true) {
         toast("Success", {
@@ -176,7 +179,7 @@ export default function Dashboard() {
   const handleColumnSave = async () => {
     try {
       setIsSaveColumnPending(true);
-      const result = await postRequest(`${apiUrl}/update-column`, {
+      const result = await postRequest(`${apiUrl}/api/update-column`, {
         header: dynamicColumnHeader,
         data: dynamicColumnData,
       });
@@ -204,8 +207,8 @@ export default function Dashboard() {
     (async () => {
       setIsPending(true);
       const result = await Promise.all([
-        getRequest(`${apiUrl}/sheet-data`),
-        getRequest(`${apiUrl}/get-column`),
+        getRequest(`${apiUrl}/api/sheet-data`),
+        getRequest(`${apiUrl}/api/get-column`),
       ]);
 
       setIsPending(false);

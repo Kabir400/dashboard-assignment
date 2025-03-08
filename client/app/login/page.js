@@ -81,7 +81,7 @@ export default function SignupPage() {
     setIsSubmitting(true);
 
     try {
-      const result = await postRequest(`${apiUrl}/login`, formData);
+      const result = await postRequest(`${apiUrl}/api/login`, formData);
 
       if (result.suceess === true) {
         toast("Success", {
