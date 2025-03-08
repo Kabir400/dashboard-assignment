@@ -101,10 +101,4 @@ cd client | npm run dev & cd server | npm start
 - **Backend:** Node.js (Express), MongoDB
 - **Google Services:** Google Sheets API, Google Apps Script
 
----
 
-## 📜 License
-
-This project is licensed under the [MIT License](LICENSE).
-
----
