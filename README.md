@@ -1,39 +1,72 @@
-# RevoeAI Assignment - Dashboard with Google Sheets Integration
+# Dashboard Project
 
-This project is a dynamic dashboard built using **Next.js**, **Node.js (Express)**, and **MongoDB**, with integrated **Google Sheets** updates via WebSockets and Google Apps Script.
+## Project Overview
 
-## 🚀 Features
-
-- **Google Sheets Integration**: Automatically updates data on the dashboard when changes are made in Google Sheets.
-- **WebSocket Support**: Ensures real-time updates for a seamless user experience.
-- **Google Apps Script Integration**: Automates the data synchronization process by pushing updates to the backend API.
-- **JWT-Based Authentication**: Ensures secure data access.
-- **Dynamic Table Features**: Provides flexibility for sorting, filtering, and displaying data.
+This project is a dynamic dashboard built using Next.js for the frontend and Node.js (Express) for the backend. It includes Google Sheets integration, dynamic table creation, and real-time updates using Google Apps Script and Socket.IO.
 
 ---
 
-## 🛠️ Setup Instructions
+## Features & Functionality
 
-### 1. Clone the Repository
+### 1. Authentication (Login & Signup)
+
+- Implemented JWT-based authentication using `jsonwebtoken` and `bcryptjs`.
+- Users are automatically logged out when the token expires.
+- Protected routes ensure users can only access the dashboard after logging in.
+
+### 2. Dashboard with Table (Google Sheets Integration)
+
+- Users can create tables with custom column headers and data types (Text/Date).
+- Integrated Google Sheets API to fetch data directly from a sheet and display it dynamically in a table.
+- Real-time updates are achieved by adding a script in Google Apps Script with an **edit trigger** that sends a request to the backend upon any sheet edits. The backend then uses **Socket.IO** to broadcast updates to all connected clients.
+
+### 3. Dynamic Column Addition
+
+- Users can dynamically add new columns directly on the dashboard without modifying the Google Sheet.
+- New columns are appended at the end of the existing columns.
+- Supported column types:
+  - **Text** (default input)
+  - **Date** (date picker input)
+- Newly added columns are permanently saved for future sessions.
+
+---
+
+## Tech Stack
+
+**Frontend:** Next.js, Tailwind CSS, ShadcnUI  
+**Backend:** Node.js (Express), MongoDB, Socket.IO  
+**Google Services:** Google Sheets API, Google Apps Script
+
+---
+
+## Installation Instructions
+
+### Step 1: Clone the Repository
 
 ```bash
-git clone https://github.com/Kabir400/dashboard-assignment.git
-cd dashboard-assignment
+git clone <repo_link>
+cd project-folder
 ```
 
-### 2. Install Dependencies
+### Step 2: Install Dependencies
+
+For Server:
 
 ```bash
-1.cd server
-2.npm install
-3.cd client
-4.npm install
+cd server
+npm install
 ```
 
-### 3. Create a `.env` File 
+For Client:
 
-- `Inside Server Folder`
-  Add the following environment variables:
+```bash
+cd client
+npm install
+```
+
+### Step 3: Environment Variables
+
+#### Server `.env` Sample
 
 ```
 PORT=8000
@@ -42,63 +75,57 @@ GOOGLE_SERVICE_ACCOUNT_CREDENTIALS={"type":"service_account","project_id":"your-
 TOKEN_SECRET_KEY=<your_jwt_secret>
 ```
 
-- `Inside Client Folder`
-  Add the following environment variables:(.env.local)
+#### Client `.env.local` Sample
 
 ```
-NEXT_PUBLIC_API_URL=http://localhost:8000
+NEXT_PUBLIC_API_URL=<your_backend_url>
 ```
 
-> ### 4. Setup Real-Time Google Sheets Integration
->
-> To integrate real-time Google Sheets updates, you need to `deploy your application` 1st or you can use services like `ngrok`:
->
-> 1. Open your Google Sheets document.
-> 2. Click **Extensions → Apps Script**.
-> 3. Paste the following code into the script editor:
+### Step 4: Run Locally
 
-```javascript
-function onEdit(e) {
-  var sheet = e.source.getActiveSheet();
-  var range = e.range;
-
-  var data = sheet.getDataRange().getValues(); // Fetch entire sheet data
-
-  var options = {
-    method: "post",
-    contentType: "application/json",
-    payload: JSON.stringify({ data: data }),
-  };
-
-  UrlFetchApp.fetch(
-    "https://dashboard-assignment-dsy9.onrender.com/api/sheet-update",
-    options
-  );
-}
-```
-
-4. Save and deploy the script as a **web app** with appropriate permissions.
-
-### 5. Run the Project Locally
+For the client:
 
 ```bash
-cd client | npm run dev & cd server | npm start
+cd client
+npm run dev
 ```
 
-### 6. Deploy to Render
+For the server:
 
-1. Push your code to GitHub.
-2. On Render, create a **Web Service**.
-3. Select your GitHub repository.
-4. Add the `.env` variables in Render's **Environment Variables** section.
-5. Deploy the project.
+```bash
+cd server
+node index.js
+```
 
 ---
 
-## 🧩 Tech Stack
+## Project Screenshots
 
-- **Frontend:** Next.js, Tailwind CSS, ShadcnUI
-- **Backend:** Node.js (Express), MongoDB
-- **Google Services:** Google Sheets API, Google Apps Script
+### Auth Page
 
+![Signup](https://res.cloudinary.com/dv4re7bf8/image/upload/v1741495327/desktok_signup_lqrww2.png)
 
+![login](https://res.cloudinary.com/dv4re7bf8/image/upload/v1741495327/mobile_login_vbuv21.png)
+
+### Dashboard
+
+![Dashboard](https://res.cloudinary.com/dv4re7bf8/image/upload/v1741495326/dashboard_mg2ldq.png)
+
+![Dashboard](https://res.cloudinary.com/dv4re7bf8/image/upload/v1741495327/mobile_dashboard_f1dnbh.png)
+
+### Loading Screen
+
+![Loading](https://res.cloudinary.com/dv4re7bf8/image/upload/v1741495327/loader_nslybp.png)
+
+### Popup Screen
+
+![Popup](https://res.cloudinary.com/dv4re7bf8/image/upload/v1741495326/configure_column_popup_h3rxpl.png)
+
+![Popup](https://res.cloudinary.com/dv4re7bf8/image/upload/v1741495325/adding_dynamic_column_z3hn8j.png)
+
+---
+
+## Live Links
+
+- **Live Application:** [Your Live Link Here](https://dashboard-assignment-xlpo.vercel.app/dashboard)
+- **Google Sheet for Testing:** [Sample Sheet Link](https://docs.google.com/spreadsheets/d/12uHTRAHg4b8MhRP4dgtHlEP9C4mvlMG5CQP4WgqaID8/edit?gid=0#gid=0)
